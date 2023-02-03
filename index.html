@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- ||||||||| Add css external style sheet link tag here |||||||||||||| -->
+  <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/b466ed6b5d.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- ||||||||||||| Add HTML Code uder this line |||||||||||| -->
+  <!--<h1>Under construction...waiting for a developer to build and design me. 🚧</h1>-->
+  
+    <nav id="navbar">
+      <div>
+      <h1>Creating a Sample Authentication System with PHP</h1>
+      </div>
+      <div class="links">
+        <a class="nav_link" href="#html">HTML</a>
+        <a class="nav_link" href="#css">CSS</a>
+        <a class="nav_link" href="#login">Login</a>
+        <a class="nav_link" href="#logout">Logout</a>
+        <a class="nav_link" href="#conclusion">Conclusion</a>
+      </div>
+     
+    </nav>
+  <hr>
+  
+  <main id="main_doc">
+    <section id="html" class="main_sec">
+      <h1>HTML</h1>
+      <p>
+        Use HTML to define the basic outline of the page.
+      </p>
+      <p>The page should contain: <br>
+        <ul>
+          <li>The Heading</li>
+          <li>The Form</li>
+          <li>The Input Fields</li>
+          <li>The Buttons</li>
+        </ul>
+      </p>
+      <div class="code_snipp">
+      <code>
+        &lt;h2&gt;LOGIN&lt;/h2&gt; <br>
+        &lt;form class="form-control w-50" method="POST" action="../login.php"&gt;
+           <br> &lt;h1 class="form-group">Login&lt;/h1&gt;
+           <br> &lt;hr&gt;
+           <br> &lt;div class="form-row flex justify-content-center"&gt;
+               <br> &lt;div class="form-group"&gt;
+                   <br> &lt;label for="email"&gt;Email&lt;/label&gt;
+                   <br> &lt;input type="email" class="form-control" id="email" placeholder="Email" name="email" required&gt;
+                <br>&lt;/div&gt;
+                <br>&lt;div class="form-group"&gt;
+                   <br> &lt;label for="password"&gt;Password&lt;/label&gt;
+                   <br> &lt;input type="password" class="form-control" id="password" placeholder="Password" name="password" required&gt;
+                <br>&lt;/div&gt;
+                <br>&lt;div class="form-group"&gt;
+                   <br> &lt;button type="submit" class="btn btn-primary" name="login"&gt;Login&lt;/button&gt;
+                <br>&lt;/div&gt;
+           <br>&nbsp; &lt;/div&gt;
+          <br>&lt;/form&gt;
+
+      </code>
+    </div>
+    </section>
+    <section id="css" class="main_sec">
+      <h1>CSS</h1>
+      <p> Use stylesheets to add color and style to your page</p>
+      <p>This can be done by using CSS codes as well as a little bootstrap.....<br>
+        just to make our work faster.
+      </p>
+      <div class="code_snipp">
+      <code>
+        <pre>
+        @import url('https://cdn.jsdelivr.net/npm/bootstrap@5.2.0
+        -beta1/dist/css/bootstrap.min.css')
+        form{
+          max-width: 500px;
+          padding: 10px 20px;
+          background: #f4f7f8;
+          margin: 10px auto;
+          padding: 20px;
+          background: #f4f7f8;
+          border-radius: 8px;
+          font-family: Georgia, "Times New Roman", serif;
+        }
+        .form-group{
+            margin: 2%;
+        }
+        h1{
+            text-align: center;
+        }
+        nav{
+            background-color: antiquewhite;
+        }
+        li{
+            font-size: 25px;
+            font-family: 'Arial Narrow', Arial, sans-serif;
+        }
+        </pre>
+      </code>
+    </div>
+    </section>
+    <section id="login" class="main_sec">
+      <h1>Login</h1>
+      <p>This will be implemented using PHP. Create a file named <strong>login.php</strong> and let's get started.</p>
+      <p>The idea is summed up in a few steps:</p>
+      <li>Create a database connection</li>
+      <li>Collect input from the HTML form</li>
+      <li>Check if the user exists in the database</li>
+      <li>Start a session and redirect if the information is corrrect</li>
+      <h4>Creating a database connection</h4>
+      <div class="code_snipp">
+        <code>
+          <pre>
+      function db() {
+        $host = "127.0.0.1";
+        $user = "root";
+        $db = "database_name";
+        $password = "";
+        $connection = mysqli_connect($host, $user, $password, $db);
+        if(!$connection){
+            echo "&lt;script&gt; alert('Error connecting to the database') &lt;/script&gt;";
+        }
+        return $connection;
+      }
+      </pre>
+        </code>
+      </div>
+      <h4>Checking and validating user input</h4>
+      <div class="code_snipp">
+        <code>
+          <pre>
+    switch(true){
+      if(isset($_POST['login'])):
+      $email = $_POST['email'];
+      $password = $_POST['password'];
+
+    $conn = db();
+    if (!$conn) {
+        die("Error connecting to database".mysqli_connect_error());
+    }
+    
+    <h5>open connection to the database and check if username exist in the database</h5>
+    $select = "SELECT * FROM students WHERE email = '$email'";
+    $result = mysqli_query($conn, $select);
+
+    <h5>if it does, check if the password is the same with what is given</h5>
+  if (mysqli_num_rows($result) == 1) {
+      $select = "SELECT * FROM students WHERE email = '$email' 
+      and password = '$password'"; <br>
+      $result = mysqli_query($conn, $select);
+      if (mysqli_num_rows($result) == 1) {
+          <h5>if true then set user session for the user</h5>
+          session_start();
+          $_SESSION['username'] = $email;
+          <h5>Redirect to the dasbboard</h5>
+          header("Location: ../dashboard.php");
+          exit;
+      } else {
+          echo "echo "&lt;script&gt;alert('Incorrect Password');&lt;/script&gt;";
+          header("Location: ../login.php");
+          exit;
+      }
+  
+  } else {
+      echo "&lt;script&gt;alert('Unregistered Email');&lt;/script&gt;";
+      header("Location: ../login.php");
+      exit;
+  }
+}
+        
+          </pre>
+        </code>
+      </div>
+      
+    </section>
+    <section id="logout" class="main_sec">
+      <h1>Logout</h1>
+      <p>This is where we disable or destroy a session. <br>
+        Create a file named <strong>logout.php</strong> and let's get started.</p>
+      <p>If a user is loged in, we simply log them out and probably redirect them to the homepage.</p>
+      <div class="code_snipp">
+        <code>
+          <pre>
+            session_start();
+          <h5>Check if the existing user has a session and if it does,<br>
+          destroy the session and redirect to login page</h5>
+
+            if (isset($_SESSION["username"])) {
+                session_destroy();
+                header("Location: ../homepage.php");
+                exit;
+            }
+          </pre>
+        </code>
+      </div>
+      <h3>OR</h3>
+      <div class="code_snipp">
+        <code>
+          <pre>
+            if (session_status() == PHP_SESSION_ACTIVE) {
+              session_unset();
+              session_destroy();
+              return redirect()->route('homepage');
+          }
+          </pre>
+        </code>
+      </div>
+    </section>
+    <section id="conclusion" class="main_sec">
+      <h1>Conclusion</h1>
+      <p>That's how easy it is guys.....Don't you agree? &#128515;.</p>
+      <p>Its easy and fun once you get the hang of it.</p>
+      <h2>See you in the next one</h2>
+      
+    </section>
+  </main>
+</body>
+
+</html>

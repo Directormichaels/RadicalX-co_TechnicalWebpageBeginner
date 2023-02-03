@@ -1,0 +1,73 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ||||||||||||||||||||| Add CSS code under this line |||||||||||||||||||| */
+
+body {
+  background-color: darkgrey;
+}
+.code_snipp {
+  background-color: green;
+  max-width: max-content;
+}
+
+#html li,
+#login li {
+  list-style-type: circle;
+  list-style-position: inside;
+}
+h5 {
+  text-align: center;
+}
+#navbar {
+  background-color: grey;
+}
+.nav_link {
+  text-decoration: none;
+  color: black;
+  margin: 0 1em;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.main_sec {
+  margin: 1em;
+}
+.links {
+  margin-top: 1em;
+  margin-left: 0;
+  max-width: 100%;
+}
+
+@media screen and (min-width: 540px) {
+  body {
+    position: relative;
+  }
+  #navbar {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    position: fixed;
+    height: 100%;
+    justify-content: center;
+  }
+
+  #navbar h1 {
+    margin: 0 0 3em 0.3em;
+  }
+  #navbar .links {
+    margin: 1em 1em 0 0;
+    line-height: 3em;
+    width: 10%;
+  }
+
+  #main_doc {
+    width: 70%;
+    position: absolute;
+    right: 0;
+    margin-right: -1em;
+  }
+}
